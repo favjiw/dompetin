@@ -13,6 +13,12 @@
     <p>Description: {{ $transaction->description }}</p>
     <p>Type: {{ $transaction->type }}</p>
     <p>Date: {{ $transaction->transaction_date }}</p>
+    <a href="{{ url('/transaction/edit/' .$transaction->id) }}">Edit</a>
+    <form action="{{ url('/transaction/delete/' . $transaction->id) }}" method="POST" style="display:inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" onclick="return confirm('Are you sure you want to delete this transaction?')">Delete</button>
+    </form>
     <a href="{{ url('/') }}">Back</a>
 </body>
 </html>

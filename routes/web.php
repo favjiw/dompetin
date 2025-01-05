@@ -14,4 +14,7 @@ Route::post('/store-category', [CategoryController::class, 'store']);
 
 Route::get('/create-transaction', [TransactionController::class, 'create']);
 Route::get('/transaction/detail/{id}', [TransactionController::class, 'show']);
+Route::get('/transaction/edit/{id}', [TransactionController::class, 'edit']);
+Route::post('/transaction/update/{id}', [TransactionController::class, 'update']);
+Route::delete('/transaction/delete/{id}', [TransactionController::class, 'destroy']);
 Route::post('/store-transaction', [TransactionController::class, 'store']);

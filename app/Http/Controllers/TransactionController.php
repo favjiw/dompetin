@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Transaction;
 
 class TransactionController extends Controller
 {
@@ -57,7 +58,11 @@ class TransactionController extends Controller
      */
     public function edit(string $id)
     {
-        return view('transaction.edit');
+        $transaction = DB::table('transactions')->where('id', $id)->first();
+        if (!$transaction) {
+            return redirect('/')->with('error', 'Transaction not found');
+        }
+        return view('transaction.edit', ['transaction' => $transaction]);
     }
 
     /**
@@ -74,6 +79,7 @@ class TransactionController extends Controller
             $request->transaction_date,
             $id
         ]);
+        return redirect('/')->with('success', 'Transaction updated successfully');
     }
 
     /**
@@ -81,6 +87,8 @@ class TransactionController extends Controller
      */
     public function destroy(string $id)
     {
-        DB::delete('DELETE FROM transactions WHERE id = ?', [$id]);
+        $transaction = Transaction::findOrFail($id);
+        $transaction->delete();
+        return redirect('/')->with('success', 'Transaction deleted successfully');
     }
 }
