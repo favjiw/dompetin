@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -19,7 +20,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.create');
     }
 
     /**
@@ -27,7 +28,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $insertDB = DB::insert('INSERT INTO categories ( name, created_at) VALUES ( ?, ?)', [
+            $request->name,
+            now()
+        ]);
     }
 
     /**

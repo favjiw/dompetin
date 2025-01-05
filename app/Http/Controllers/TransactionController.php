@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -11,7 +12,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transactions = DB::select('SELECT * FROM transactions');
+        return view('transaction.index', ['transactions' => $transactions]);    
     }
 
     /**
@@ -19,7 +21,7 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        //
+        return view('transaction.create');
     }
 
     /**
@@ -27,7 +29,15 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::insert('INSERT INTO transactions (user_id, category_id, type, amount, description, transaction_date, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)', [
+            $request->user_id,
+            $request->category_id,
+            $request->type,
+            $request->amount,
+            $request->description,
+            $request->transaction_date,
+            now()
+        ]);
     }
 
     /**
@@ -35,7 +45,11 @@ class TransactionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $transaction = DB::table('transactions')->where('id', $id)->first();
+        if (!$transaction) {
+            return redirect('/')->with('error', 'Transaction not found');
+        }
+        return view('transaction.show', ['transaction' => $transaction]);
     }
 
     /**
@@ -43,7 +57,7 @@ class TransactionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('transaction.edit');
     }
 
     /**
@@ -51,7 +65,15 @@ class TransactionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DB::update('UPDATE transactions SET user_id = ?, category_id = ?, type = ?, amount = ?, description = ?, transaction_date = ? WHERE id = ?', [
+            $request->user_id,
+            $request->category_id,
+            $request->type,
+            $request->amount,
+            $request->description,
+            $request->transaction_date,
+            $id
+        ]);
     }
 
     /**
@@ -59,6 +81,6 @@ class TransactionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::delete('DELETE FROM transactions WHERE id = ?', [$id]);
     }
 }
