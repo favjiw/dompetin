@@ -1,21 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Transaction</title>
-</head>
-<body>
-    <h1>Transaction</h1>
-    @foreach ($transactions as $item)
-        <p>{{ $item->id }}</p>
-        <p>{{ $item->amount }}</p>
-        <p>{{ $item->description }}</p>
-        <p>{{ $item->type }}</p>
-        <p>{{ $item->created_at }}</p>
-        <p>{{ $item->updated_at }}</p>
-        <a href="{{ url('transaction/detail/' .$item->id) }}">Link</a>
-    @endforeach
-</body>
-</html>
+@extends('layouts.master')
+
+@section('title', 'Transactions')
+
+@section('content')
+    <h1>Transactions</h1>
+    <a href="{{ url('/transactions/create') }}" class="btn btn-primary mb-3">Add Transaction</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop transaksi -->
+            @foreach($transactions as $transaction)
+                <tr>
+                    <td>{{ $transaction->id }}</td>
+                    <td>{{ $transaction->type }}</td>
+                    <td>{{ $transaction->description }}</td>
+                    <td>{{ $transaction->amount }}</td>
+                    <td>{{ $transaction->transaction_date }}</td>
+                    <td>
+                        <a href="{{ url('/transactions/detail/' . $transaction->id) }}" class="btn btn-sm btn-warning">Detail</a>
+                        {{-- <form action="{{ url('/transactions/delete/' . $transaction->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                        </form> --}}
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+@endsection

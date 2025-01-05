@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Transaction;
+use App\Models\Category;
 
 class TransactionController extends Controller
 {
@@ -13,7 +15,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = DB::select('SELECT * FROM transactions');
+        $id = Auth::user()->id;
+        $transactions = DB::table('transactions')->where('user_id', $id)->get();
         return view('transaction.index', ['transactions' => $transactions]);    
     }
 
@@ -22,7 +25,8 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        return view('transaction.create');
+        $categories = Category::all();
+        return view('transaction.create', compact('categories'));
     }
 
     /**
@@ -30,8 +34,9 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
+        $user_id = Auth::user()->id;
         DB::insert('INSERT INTO transactions (user_id, category_id, type, amount, description, transaction_date, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)', [
-            $request->user_id,
+            $user_id,
             $request->category_id,
             $request->type,
             $request->amount,
@@ -39,6 +44,7 @@ class TransactionController extends Controller
             $request->transaction_date,
             now()
         ]);
+        return redirect('/transactions')->with('success', 'Transaction created successfully');
     }
 
     /**
@@ -48,7 +54,7 @@ class TransactionController extends Controller
     {
         $transaction = DB::table('transactions')->where('id', $id)->first();
         if (!$transaction) {
-            return redirect('/')->with('error', 'Transaction not found');
+            return redirect('/transactions')->with('error', 'Transaction not found');
         }
         return view('transaction.show', ['transaction' => $transaction]);
     }
@@ -59,10 +65,11 @@ class TransactionController extends Controller
     public function edit(string $id)
     {
         $transaction = DB::table('transactions')->where('id', $id)->first();
+        $categories = DB::table('categories')->get();
         if (!$transaction) {
-            return redirect('/')->with('error', 'Transaction not found');
+            return redirect('/transaction')->with('error', 'Transaction not found');
         }
-        return view('transaction.edit', ['transaction' => $transaction]);
+        return view('transaction.edit', compact('transaction', 'categories'));
     }
 
     /**
@@ -70,8 +77,9 @@ class TransactionController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user_id = Auth::user()->id;
         DB::update('UPDATE transactions SET user_id = ?, category_id = ?, type = ?, amount = ?, description = ?, transaction_date = ? WHERE id = ?', [
-            $request->user_id,
+            $user_id,
             $request->category_id,
             $request->type,
             $request->amount,
@@ -79,7 +87,7 @@ class TransactionController extends Controller
             $request->transaction_date,
             $id
         ]);
-        return redirect('/')->with('success', 'Transaction updated successfully');
+        return redirect('/transactions')->with('success', 'Transaction updated successfully');
     }
 
     /**
@@ -89,6 +97,6 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::findOrFail($id);
         $transaction->delete();
-        return redirect('/')->with('success', 'Transaction deleted successfully');
+        return redirect('/transactions')->with('success', 'Transaction deleted successfully');
     }
 }

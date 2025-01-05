@@ -1,24 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Transaction Detail</title>
-</head>
-<body>
-    <h1>Transaction Detail</h1>
-    <p>ID: {{ $transaction->id }}</p>
-    <p>Amount: {{ $transaction->amount }}</p>
-    <p>Description: {{ $transaction->description }}</p>
-    <p>Type: {{ $transaction->type }}</p>
-    <p>Date: {{ $transaction->transaction_date }}</p>
-    <a href="{{ url('/transaction/edit/' .$transaction->id) }}">Edit</a>
-    <form action="{{ url('/transaction/delete/' . $transaction->id) }}" method="POST" style="display:inline;">
-        @csrf
-        @method('DELETE')
-        <button type="submit" onclick="return confirm('Are you sure you want to delete this transaction?')">Delete</button>
-    </form>
-    <a href="{{ url('/') }}">Back</a>
-</body>
-</html>
+@extends('layouts.master')
+
+@section('title', 'Transaction Detail')
+
+@section('content')
+    <div class="container">
+        <h1>Transaction Detail</h1>
+        <p><strong>ID:</strong> {{ $transaction->id }}</p>
+        <p><strong>Amount:</strong> {{ $transaction->amount }}</p>
+        <p><strong>Description:</strong> {{ $transaction->description }}</p>
+        <p><strong>Type:</strong> {{ $transaction->type }}</p>
+        <p><strong>Date:</strong> {{ $transaction->transaction_date }}</p>
+
+        <a href="{{ url('/transactions/edit/' . $transaction->id) }}" class="btn btn-warning">Edit</a>
+        <form action="{{ url('/transactions/delete/' . $transaction->id) }}" method="POST" style="display:inline;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this transaction?')">Delete</button>
+        </form>
+        <a href="{{ url('/transactions') }}" class="btn btn-secondary">Back</a>
+    </div>
+@endsection
