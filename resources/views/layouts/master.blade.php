@@ -3,58 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'Dashboard')</title>
-    <!-- Tambahkan link CSS (contoh menggunakan Bootstrap) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin_page.css') }}">
+    <script src="https://kit.fontawesome.com/2b7eddacef.js" crossorigin="anonymous"></script>
+    
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Dompetin</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/dashboard') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/transactions') }}">Transactions</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/categories') }}">Categories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/profile') }}">Profile</a>
-                    </li>
-                </ul>
-            </div>
+
+<div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Dompetin</h2>
+        <ul>
+            <li><a href="{{ url('/dashboard') }}"><i class="fas fa-solid fa-home"></i> Dashboard</a></li>
+            <li><a href="{{ url('/transactions') }}"><i class="fas fa-solid fa-coins"></i> Transaction</a></li>
+            <li><a href="{{ url('/wallet') }}"><i class="fas fa-solid fa-wallet"></i> My Wallet</a></li>
+            <li><a href="{{ url('/saving') }}"><i class="fas fa-solid fa-sack-dollar"></i> Savings</a></li>
+            <li><a href="{{ url('/profile') }}"><i class="fas fa-solid fa-user-large"></i> Profile</a>
+        </ul>
+        <div class="social_media">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
         </div>
-    </nav>
-
-    <div class="container mt-4">
-        <!-- Flash Messages -->
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        <!-- Content Section -->
-        @yield('content')
     </div>
 
-    {{-- <footer class="text-center mt-4">
-        <p>&copy; {{ date('Y') }} My Dashboard. All rights reserved.</p>
-    </footer> --}}
+    <!-- Main Content -->
+    <div class="main_content">
+        <div class="header">
+            @yield('header', 'Welcome! Have a nice day.')
+        </div>
+        <div class="info">
+            @yield('content')
+        </div>
+    </div>
+</div>
 
-    <!-- Tambahkan script JS (contoh menggunakan Bootstrap) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+@stack('scripts')
 </body>
 </html>
