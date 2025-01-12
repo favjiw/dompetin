@@ -1,0 +1,119 @@
+.row{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.row h1{
+    font-size: 2rem;
+    color: black;
+    font-weight: bold;
+}
+
+.transactionBtn {
+	background-color:#3064ff;
+	border-radius:42px;
+	display:inline-block;
+	cursor:pointer;
+	color:#fbfbfb;
+	font-size:12px;
+	padding:5px 15px;
+	text-decoration:none;
+}
+.transactionBtn:hover {
+	background-color:#5781ff;
+}
+.transactionBtn:active {
+	position:relative;
+	top:1px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.table thead th {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+/* Teks */
+.table td {
+    color: #555;
+    font-size: 14px;
+}
+
+.table th {
+    font-size: 16px;
+}
+
+/* Tombol Aksi */
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-warning {
+    background-color: #f1c40f;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #d4ac0d;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+    .table {
+        font-size: 12px;
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+
+    .transactionBtn {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+}

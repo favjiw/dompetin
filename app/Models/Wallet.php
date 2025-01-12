@@ -4,16 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class Wallet extends Model
 {
     protected $fillable = [
         'user_id',
-        'category_id',
-        'wallet_id',
+        'name',
         'type',
         'amount',
-        'description',
-        'transaction_date',
         'created_at'
     ];
 }

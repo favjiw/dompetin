@@ -8,12 +8,9 @@
   </head>
   <body>
     <header>
-      <div class="logo">Logo</div>
+      <div class="logo"><img src="{{ asset('images/dompetin_logo.png') }}" alt="Dompetin" width="150px" height="100px"></div>
       <nav>
-        <a href="#">How It Works</a>
-        <a href="#">Payments</a>
-        <a href="#">Help</a>
-        <a href="#">Blog</a>
+        
       </nav>
       <div class="cta-buttons">
         <a href="{{ route('register') }}" class="sign-up">Sign Up</a>

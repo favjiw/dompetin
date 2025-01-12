@@ -1,0 +1,62 @@
+/* Container */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Wallet Card */
+.wallet-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+}
+
+.wallet-card h1 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.wallet-card p {
+    font-size: 1.2rem;
+    color: #555;
+    margin: 10px 0;
+}
+
+.wallet-card .wallet-type {
+    font-size: 1rem;
+    color: #3498db;
+}
+
+.wallet-card .wallet-amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #27ae60;
+}
+
+/* Back Button */
+.backBtn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.backBtn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.backBtn:active {
+    background-color: #2471a3;
+}

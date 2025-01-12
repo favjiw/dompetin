@@ -4,16 +4,23 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\WalletController;
+use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('landing');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     $user = Auth::user();
+//     return view('home', compact('user'));
+
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -28,6 +35,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/transactions/update/{id}', [TransactionController::class, 'update']);
     Route::delete('/transactions/delete/{id}', [TransactionController::class, 'destroy']);
     Route::post('/transactions/store', [TransactionController::class, 'store']);
+
+    Route::get('/myWallet', [WalletController::class, 'index']);
+    Route::get('/myWallet/create', [WalletController::class, 'create']);
+    Route::post('/myWallet/store', [WalletController::class, 'store']);
+    Route::get('/myWallet/detail/{id}', [WalletController::class, 'show']);
 });
 
 require __DIR__.'/auth.php';

@@ -1,0 +1,111 @@
+/* Header */
+.headerr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px; /* Menambahkan sedikit padding di kiri dan kanan */
+}
+
+.headerr h1 {
+    font-size: 2rem;
+    color: black;
+    font-weight: bold;
+    margin: 0; /* Menghilangkan margin default */
+}
+
+.headerr .transactionBtn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.headerr .transactionBtn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.headerr .transactionBtn:active {
+    background-color: #2471a3;
+}
+
+/* Container untuk mengatur tata letak */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Baris utama dengan grid */
+.row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsif: kolom minimal 300px */
+    gap: 20px; /* Jarak antar card */
+    margin-top: 20px;
+}
+
+/* Gaya kartu */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Bagian dalam kartu */
+.card-body {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Judul dalam kartu */
+.card-body h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Paragraf */
+.card-body p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+}
+
+/* Tombol di dalam kartu */
+.transactionBtn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 15px;
+    background-color: #3498db;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.transactionBtn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.transactionBtn:active {
+    background-color: #2471a3;
+}

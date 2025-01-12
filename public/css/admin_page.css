@@ -100,3 +100,12 @@ body{
 .wrapper .main_content .info div{
   margin-bottom: 20px;
 }
+
+.breadcrumb{
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-item{
+  padding-right: 10px;
+}

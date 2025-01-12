@@ -25,8 +25,10 @@ class TransactionController extends Controller
      */
     public function create()
     {
+        $id = Auth::user()->id;
         $categories = Category::all();
-        return view('transaction.create', compact('categories'));
+        $wallets = DB::table('wallets')->where('user_id', $id)->get();
+        return view('transaction.create', compact('categories', 'wallets'));
     }
 
     /**
@@ -35,17 +37,34 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $user_id = Auth::user()->id;
-        DB::insert('INSERT INTO transactions (user_id, category_id, type, amount, description, transaction_date, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)', [
+
+      
+        DB::insert('INSERT INTO transactions (user_id, category_id, wallet_id, type, amount, description, transaction_date, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [
             $user_id,
             $request->category_id,
+            $request->wallet_id,
             $request->type,
             $request->amount,
             $request->description,
             $request->transaction_date,
             now()
         ]);
+
+        $wallet = DB::table('wallets')->where('id', $request->wallet_id)->first();
+
+        if ($request->type == 'income') {
+            DB::table('wallets')
+                ->where('id', $request->wallet_id)
+                ->update(['amount' => $wallet->amount + $request->amount]);
+        } elseif ($request->type == 'expense') {
+            DB::table('wallets')
+                ->where('id', $request->wallet_id)
+                ->update(['amount' => $wallet->amount - $request->amount]);
+        }
+
         return redirect('/transactions')->with('success', 'Transaction created successfully');
     }
+
 
     /**
      * Display the specified resource.
@@ -66,10 +85,11 @@ class TransactionController extends Controller
     {
         $transaction = DB::table('transactions')->where('id', $id)->first();
         $categories = DB::table('categories')->get();
+        $wallets = DB::table('wallets')->where('user_id', Auth::user()->id)->get();
         if (!$transaction) {
             return redirect('/transaction')->with('error', 'Transaction not found');
         }
-        return view('transaction.edit', compact('transaction', 'categories'));
+        return view('transaction.edit', compact('transaction', 'categories', 'wallets'));
     }
 
     /**
@@ -77,18 +97,39 @@ class TransactionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user_id = Auth::user()->id;
-        DB::update('UPDATE transactions SET user_id = ?, category_id = ?, type = ?, amount = ?, description = ?, transaction_date = ? WHERE id = ?', [
-            $user_id,
+        $transaction = DB::table('transactions')->where('id', $id)->first();
+        if (!$transaction) {
+            return redirect('/transactions')->with('error', 'Transaction not found');
+        }
+        $wallet = DB::table('wallets')->where('id', $request->wallet_id)->first();
+        if (!$wallet) {
+            return redirect('/transactions')->with('error', 'Wallet not found');
+        }
+        $oldAmount = $transaction->amount;  
+        $newAmount = $request->amount;  
+        $walletAmountChange = $newAmount - $oldAmount;
+        DB::update('UPDATE transactions SET user_id = ?, category_id = ?, wallet_id = ?, type = ?, amount = ?, description = ?, transaction_date = ? WHERE id = ?', [
+            Auth::user()->id,
             $request->category_id,
+            $request->wallet_id,
             $request->type,
             $request->amount,
             $request->description,
             $request->transaction_date,
             $id
         ]);
+
+        if ($transaction->type == 'income') {
+            DB::table('wallets')->where('id', $request->wallet_id)
+                ->update(['amount' => $wallet->amount - $oldAmount + $newAmount]);
+        } elseif ($transaction->type == 'expense') {
+            DB::table('wallets')->where('id', $request->wallet_id)
+                ->update(['amount' => $wallet->amount + $oldAmount - $newAmount]);
+        }
+
         return redirect('/transactions')->with('success', 'Transaction updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.

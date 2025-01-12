@@ -1,0 +1,72 @@
+.dashboard-content{
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.dashboard {
+    width: 90%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(3, 5fr);
+    gap: 20px;
+}
+.card {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+.card h3 {
+    margin: 0 0 10px 0;
+}
+.highlight {
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+}
+.income {
+    color: green;
+}
+.expenses {
+    color: red;
+}
+.history, .saving-plan, .bank-cards {
+    height: 200px;
+    overflow-y: auto;
+}
+    .history{
+        height: 300px;
+    }
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+.history-item span {
+    width: 33%;
+    text-align: center;
+}
+.button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    color: Black;
+    border-color: blue;
+    border: 2px solid rgb(30, 113, 190);
+    cursor: pointer;
+}
+.button:hover {
+    background-color:rgb(255, 255, 255);
+}
+.bank-cards {
+    grid-column: span 2;
+}
+.current-savings {
+    grid-column: span 1;
+}
+.history {
+    grid-column: span 2;
+    grid-row: span 10;
+}
